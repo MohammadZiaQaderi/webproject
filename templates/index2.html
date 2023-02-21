@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        th,td{
+        border: 1px black solid;
+        }
+    </style>
+</head>
+<body>
+ <h1>Users Page</h1>
+{% if user %}
+ <h1>Show Data</h1>
+ <table>
+     <tr>
+         <th>Name</th>
+         <th>Date of birth</th>
+         <th>Phone Number</th>
+         <th>Email ID</th>
+     </tr>
+ <tr>
+    {% for u in user %}
+     <td>{{u.Name}}</td>
+     <td>{{u.DateOfBirth}}</td>
+     <td>{{u.PhoneNumber}}</td>
+     <td>{{u.EmailID}}</td>
+ </tr>
+ {% endfor %}
+</table>
+{% else %}
+ <h1>No Data</h1>
+{% endif %}
+<a href="/index">Submit another user</a>
+</body>
+</html>

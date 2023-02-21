@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>users form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script>
+    
+    function validateDOB(emailID) {   
+    var phone=document.getElementById("inputPhone").value;
+    var Name=document.getElementById("inputName").value;
+    var EmailId=document.getElementById("inputEmail").value;
+    var dob=document.getElementById("inputDateOfBirth").value;
+    
+    if(Name=="")
+    {
+      alert("all feilds are mandatory...");
+      document.myForm.inputName.focus();
+      return false;
+    }
+    else if(dob=="")
+    {
+      alert("all feilds are mandatory...");
+      document.myForm.inputDateOfBirth.focus();
+      return false;
+    }
+    else
+    {
+    var mailformat = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/; 
+    phonelength=Number(phone.length);
+    var today = new Date();
+    var dateparts = dob.split('-');
+    var Dob = new Date(dateparts[0], dateparts[1]-1, dateparts[2]); // substract 1 month because month starting with 0
+    var difference = today.getTime() - Dob.getTime(); // difference in ms
+    difference=difference/1000;
+    difference=difference/3600;
+    difference=difference/24;
+    difference=difference/365;
+    if(difference<18)
+    {
+      alert("you are below 18 years..., not eligible...");
+    }
+    else
+    {
+      
+      if(phonelength!=10)
+      {
+        alert("invalid phone number");
+        document.myForm.inputPhone.focus();
+        return false;
+      }
+      else if(!emailID.value.match(mailformat))
+      {
+        alert("Invalid email id...");
+        document.myForm.inputEmail.focus();
+        return false;
+      }
+      else
+      {
+      document.forms['myForm'].submit();
+      alert("{{name}}");
+      document.myForm.inputPhone.focus();
+      return true;
+      }
+    }
+  }
+  
+}
+  </script>
+  </head>
+  <body>   
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    
+    <br class="row g-3">
+     <div class="row">
+      <div class="w-50 mx-auto">
+        <label for="inputDateOfBirth" class="form-label"><h1>User Details</h1></label>
+      </div>   
+        <form action='/showMessage' method="GET" name="myForm">
+          {% csrf_token %}
+        <div class="w-50 mx-auto">
+          <label for="inputName" class="form-label">Name</label>
+          <input type="text" class="form-control" id="inputName" placeholder="name" name="inputName">
+        </div>
+
+        </br>
+        <div class="w-50 mx-auto">
+          <label for="inputDateOfBirth" class="form-label">Date Of Birth</label>
+          <input type="date" name="inputDateOfBirth" class="form-control" id="inputDateOfBirth">
+        </div>
+        <div class="w-50 mx-auto">
+            <label for="inputPhone" class="form-label">Phone</label>
+            <input type="number" class="form-control" id="inputPhone" name="inputPhone" placeholder="mobile number here">
+          </div>
+          <div class="w-50 mx-auto">
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" required="required" class="form-control" id="inputEmail" name="inputEmail" placeholder="example@gmail.com">
+          </div>
+    </br>
+        <div class="w-50 mx-auto">
+          <button type="button" class="btn btn-primary" onclick="validateDOB(document.myForm.inputEmail);">Submit</button>
+        </div>
+      </form>
+      <div class="w-50 mx-auto">
+        <a for="link" href="/index3" class="form-label"><h1>see submited user/users</h1></a>
+      </div>   
+    </div>
+    
+</body>
+</html>
